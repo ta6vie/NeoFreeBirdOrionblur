@@ -217,4 +217,12 @@ jobs:
           files: |
             main/packages/${{ steps.tweak_info.outputs.name }}-*
             main/packages/*.deb
-          draft: true
+           draft: true
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+        name: ${{ matrix.deploy_format }}-output
+        path: |
+          ./**/*.ipa
+          ./**/*.deb
+          ./**/*.tipa
