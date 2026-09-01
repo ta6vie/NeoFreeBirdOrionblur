@@ -205,24 +205,24 @@ jobs:
             "packages/${{ steps.tweak_info.outputs.name }}-${{ matrix.deploy_format }}-X_${{ steps.tweak_info.outputs.version }}_${{ steps.x_version.outputs.version }}.${IPA_EXT}"
         env:
           IPA_EXT: ${{ matrix.deploy_format == 'trollstore' && 'tipa' || 'ipa' }}
-
       - name: Add to Draft Release
         if: ${{ inputs.create_release }}
         uses: softprops/action-gh-release@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.tweak_info.outputs.version }}
-          name: v${{ steps.tweak_info.outputs.version }} - ${{ steps.tweak_info.outputs.name }}
-          files: |
-            main/packages/${{ steps.tweak_info.outputs.name }}-*
-            main/packages/*.deb
-           draft: true
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: v${{ steps.tweak_info.outputs.version }}
+                name: v${{ steps.tweak_info.outputs.version }} - ${{ steps.tweak_info.outputs.name }}
+                files: |
+                  main/packages/${{ steps.tweak_info.outputs.name }}-*
+                  main/packages/*.deb
+                draft: true
+
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-        name: ${{ matrix.deploy_format }}-output
-        path: |
-          ./**/*.ipa
-          ./**/*.deb
-          ./**/*.tipa
+          name: ${{ matrix.deploy_format }}-output
+          path: |
+            ./**/*.ipa
+            ./**/*.deb
+            ./**/*.tipa
